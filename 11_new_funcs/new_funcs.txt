@@ -1,0 +1,21 @@
+New iterator-related functions in go 1.23
+
+slices:
+
+All([]E) iter.Seq2[int, E]
+Values([]E) iter.Seq[E]
+Collect(iter.Seq[E]) []E
+AppendSeq([]E, iter.Seq[E]) []E
+Backward([]E) iter.Seq2[int, E]
+Sorted(iter.Seq[E]) []E
+SortedFunc(iter.Seq[E], func(E, E) int) []E
+SortedStableFunc(iter.Seq[E], func(E, E) int) []E
+Chunk([]E, int) iter.Seq([]E)
+
+maps:
+
+All(map[K]V) iter.Seq2[K, V]
+Keys(map[K]V) iter.Seq[K]
+Values(map[K]V) iter.Seq[V]
+Collect(iter.Seq2[K, V]) map[K, V]
+Insert(map[K, V], iter.Seq2[K, V])
