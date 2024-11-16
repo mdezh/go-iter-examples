@@ -1,4 +1,4 @@
-# Code examples for video about iterators in Go 1.23
+# Code examples for the video about iterators in Go 1.23
 
 ## Usage
 
