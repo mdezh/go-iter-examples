@@ -12,9 +12,13 @@ func First[V any](seq iter.Seq[V], n int) iter.Seq[V] {
 		if n < 1 {
 			return
 		}
+
 		for v := range seq {
+			if !yield(v) {
+				return
+			}
 			n--
-			if !yield(v) || n == 0 {
+			if n == 0 {
 				return
 			}
 		}
@@ -72,19 +76,13 @@ func Numerate[V any](seq iter.Seq[V], firstIndex int) iter.Seq2[int, V] {
 
 func Fib(yield func(v int) bool) {
 	prev, cur := 0, 1
-	for {
-		if !yield(cur) {
-			return
-		}
+	for yield(cur) {
 		prev, cur = cur, prev+cur
 	}
 }
 
 func Sqr(yield func(v int) bool) {
-	for i := 1; ; i++ {
-		if !yield(i * i) {
-			return
-		}
+	for i := 1; yield(i * i); i++ {
 	}
 }
 

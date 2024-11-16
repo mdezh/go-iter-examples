@@ -2,6 +2,14 @@ package main
 
 import "fmt"
 
+func Fib10(yield func(v int)) {
+	prev, cur := 0, 1
+	for range 10 {
+		yield(cur)
+		prev, cur = cur, prev+cur
+	}
+}
+
 func Pull[V any](pushIter func(yield func(v V))) func() (V, bool) {
 	c := make(chan V)
 
@@ -15,14 +23,6 @@ func Pull[V any](pushIter func(yield func(v V))) func() (V, bool) {
 	return func() (V, bool) {
 		v, ok := <-c
 		return v, ok
-	}
-}
-
-func Fib10(yield func(v int)) {
-	prev, cur := 0, 1
-	for range 10 {
-		yield(cur)
-		prev, cur = cur, prev+cur
 	}
 }
 

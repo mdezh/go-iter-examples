@@ -15,6 +15,7 @@ func (t *Tree[V]) All(yield func(v V) bool) {
 		}
 		return process(t.l) && yield(t.v) && process(t.r)
 	}
+
 	process(t)
 }
 

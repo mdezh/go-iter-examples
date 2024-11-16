@@ -12,9 +12,13 @@ func First[V any](seq iter.Seq[V], n int) iter.Seq[V] {
 		if n < 1 {
 			return
 		}
+
 		for v := range seq {
+			if !yield(v) {
+				return
+			}
 			n--
-			if !yield(v) || n == 0 {
+			if n == 0 {
 				return
 			}
 		}
@@ -24,11 +28,10 @@ func First[V any](seq iter.Seq[V], n int) iter.Seq[V] {
 func While[V any](seq iter.Seq[V], p func(v V) bool) iter.Seq[V] {
 	return func(yield func(v V) bool) {
 		for v := range seq {
-			if p(v) {
-				if !yield(v) {
-					return
-				}
-			} else {
+			if !p(v) {
+				return
+			}
+			if !yield(v) {
 				return
 			}
 		}
@@ -38,10 +41,8 @@ func While[V any](seq iter.Seq[V], p func(v V) bool) iter.Seq[V] {
 func Filter[V any](seq iter.Seq[V], p func(v V) bool) iter.Seq[V] {
 	return func(yield func(v V) bool) {
 		for v := range seq {
-			if p(v) {
-				if !yield(v) {
-					return
-				}
+			if p(v) && !yield(v) {
+				return
 			}
 		}
 	}
@@ -68,10 +69,7 @@ func Reduce[V any, A any](seq iter.Seq[V], acc A, r func(acc A, v V) A) A {
 
 func Fib(yield func(v int) bool) {
 	prev, cur := 0, 1
-	for {
-		if !yield(cur) {
-			return
-		}
+	for yield(cur) {
 		prev, cur = cur, prev+cur
 	}
 }
@@ -98,7 +96,7 @@ func concat(acc, v string) string {
 
 // transform first 90 members of the Fib sequence to the string like "(N1)(N2)(N3)..."
 // use only even members
-// don't process N with length of "(N)" greater than 7
+// don't process N with length of "(N)" >= 7
 
 func main() {
 	head := First(Fib, 90)
