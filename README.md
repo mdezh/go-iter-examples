@@ -2,7 +2,8 @@
 
 ## Video
 
-https://youtu.be/3SVkAKeRiSI
+YouTube: https://youtu.be/3SVkAKeRiSI
+RuTube: https://rutube.ru/video/b346396d9582472340cc57893af7d6d2/
 
 ## Usage
 
