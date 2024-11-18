@@ -1,5 +1,9 @@
 # Code examples for the video about iterators in Go 1.23
 
+## Video
+
+https://youtu.be/3SVkAKeRiSI
+
 ## Usage
 
 Clone the repo and go to the repo folder.
